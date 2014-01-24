@@ -1,0 +1,13 @@
+{
+  "name": "node-api",
+  "description": "download node.js api doc",
+  "version": "0.1.0"
+  "author": {
+    "name": "brucewar",
+    "email": "wjl891014@gmail.com"
+  },
+  "dependencies": {
+    "cheerio": "*"
+  },
+  "main": "nodeAPI"
+}
