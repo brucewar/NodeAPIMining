@@ -2,9 +2,9 @@ var http = require('http');
 var cheerio = require('cheerio');
 var fs = require('fs');
 var options = {
-  host: 'cn-proxy.jp.oracle.com',
-  port: '80',
-  path: 'http://nodejs.org/api/',
+  host: 'nodejs.org',
+  port: 80,
+  path: '/api/',
   method: 'GET'
 };
 http.request(options, function(res){
@@ -31,10 +31,9 @@ function parseDocument($){
   //console.log(JSON.stringify(apis));
 
   apis.forEach(function(api, index, array){
-    //console.log(options);
     var apiOptions = options;
-    apiOptions['path'] += api['url'];
-    getAPI(options, api['title']);
+    apiOptions['path'] = "/api/" + api['url'];
+    getAPI(apiOptions, api['title']);
   });
 }
 
@@ -50,8 +49,9 @@ function getAPI(options, title){
 }
 
 function saveFile(doc, fileName){
+  console.log(doc);
   //file name can not contain character '/'
-  var fileName = __dirname + "\\api\\" + fileName.replace(/\//g, '_') + ".html";
+  var fileName = __dirname + "\\api\\" + fileName.replace(/\/|\s/g, '_') + ".html";
   fs.writeFile(fileName, doc, function(err){
     if(err) throw new Error("Save " + fileName + " failed!");
     console.log("Save " + fileName + " successfully!");
